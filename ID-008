@@ -1,37 +1,63 @@
-122. Best Time to Buy and Sell Stock II
+238. Product of Array Except Self
 
 STATEMENT
-You are given an integer array prices where prices[i] is the price of a given stock on the ith day. On each day, 
-you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. 
-However, you can buy it then immediately sell it on the same day.
-Find and return the maximum profit you can achieve.
+Given an integer array nums, return an array answer such that answer[i] is equal to 
+the product of all the elements of nums except nums[i].
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+You must write an algorithm that runs in O(n) time and without using the division operation.
 
 SOLUTION
 class Solution
 {
 public:
-    int maxProfit(vector<int>& a)
+    vector<int> productExceptSelf(vector<int>& a)
     {
-        int n = a.size();
-        int ans = 0;
-        for (int i = 1; i < n;)
+        vector<int>v;
+        int ans=1;
+        int n=a.size();
+        int cnt=0;
+        for(int i=0; i<n; i++)
         {
-            if (a[i] >= a[i - 1])
+            if(a[i]==0)
             {
-                int s = i - 1;
-                while (i < n && a[i] >= a[i - 1])
-                {
-                    i++;
-                }
-                i--;
-                ans += (a[i] - a[s]);
-                i++;
+                cnt++;
             }
             else
             {
-                i++;
+                ans*=a[i];
             }
         }
-        return ans;
+        if(cnt>=2)
+        {
+            for(int i=0; i<n; i++)
+            {
+                v.push_back(0);
+            }
+        }
+        else if(cnt==1)
+        {
+            for(int i=0; i<n; i++)
+            {
+                if(a[i]!=0)
+                {
+                    v.push_back(0);
+                }
+                else
+                {
+                    v.push_back(ans);
+                }
+
+            }
+        }
+        else
+        {
+            for(int i=0; i<n; i++)
+            {
+                v.push_back(ans/a[i]);
+            }
+        }
+
+        return v;
+
     }
 };
