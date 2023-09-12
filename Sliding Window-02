@@ -1,0 +1,38 @@
+3. Longest Substring Without Repeating Characters
+
+STATEMENT
+Given a string s, find the length of the longest substring without repeating characters.
+
+SOLUTION
+ class Solution
+{
+public:
+    int lengthOfLongestSubstring(string s)
+    {
+        unordered_set<char> st;
+        int n = s.size();
+        int l = 0, r = 0;
+        int ans = 0;
+
+        while (r < n)
+        {
+            while (st.find(s[r]) == st.end() && r<n)
+            {
+                st.insert(s[r]);
+                r++;
+            }
+            ans = max(ans, r - l);
+            cout<<ans<<endl;
+            if(r < n)
+            {
+                while (st.find(s[r]) != st.end())
+                {
+                    st.erase(s[l]);
+                    l++;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
