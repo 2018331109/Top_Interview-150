@@ -1,0 +1,94 @@
+36. Valid Sudoku
+
+STATEMENT
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+    Each row must contain the digits 1-9 without repetition.
+    Each column must contain the digits 1-9 without repetition.
+    Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+Note:
+    A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+    Only the filled cells need to be validated according to the mentioned rules.
+
+SOLUTION
+class Solution
+{
+public:
+    bool isValidSudoku(vector<vector<char>>& board)
+    {
+        int n = 9;
+        unordered_map<char, int> r, c, rc; // r for rows, c for columns, rc for 3x3 subgrids
+        int f = 0;
+
+        // Check rows
+        for (int i = 0; i < n; i++)
+        {
+            r.clear();
+            for (int j = 0; j < n; j++)
+            {
+                if (board[i][j] != '.')
+                {
+
+                    if (++r[board[i][j]] > 1)
+                    {
+                        f = 1;
+                        cout << r[board[i][j]] << endl;
+                    }
+                }
+            }
+        }
+
+        // Check columns
+        for (int i = 0; i < n; i++)
+        {
+            c.clear();
+            for (int j = 0; j < n; j++)
+            {
+                if (board[j][i] != '.')
+                {
+                    if (++c[board[j][i]] > 1)
+                    {
+                        f = 1;
+                        cout << c[board[j][i]] << endl;
+                    }
+                }
+            }
+        }
+
+        // Check 3x3 subgrids
+        int it = 0, itt = 0;
+        while (it + 2 < n)
+        {
+            itt=0;
+            while(itt + 2 < n)
+            {
+                int i = it, j = itt;
+                // Clear the subgrid map
+                rc.clear();
+                for (i = it; i <= it + 2; i++)
+                {
+                    for (j = itt; j <= itt + 2; j++)
+                    {
+                        if (board[i][j] != '.')
+                        {
+                            if(++rc[board[i][j]] > 1)
+                            {
+                                f = 1;
+                                cout<<rc[board[i][j]]<<endl;
+                            }
+                        }
+
+                    }
+                }
+
+                itt += 3;
+
+            }
+
+            it += 3;
+        }
+
+        return f == 0;
+    }
+};
+
+
