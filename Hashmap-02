@@ -1,0 +1,46 @@
+128. Longest Consecutive Sequence
+
+STATEMENT
+Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+You must write an algorithm that runs in O(n) time.
+
+SOLUTION
+class Solution
+{
+public:
+    int longestConsecutive(vector<int>& nums)
+    {
+        unordered_map<int, bool>mp;
+        
+        for(auto it: nums)
+        {
+            mp[it]=true;
+        }
+        
+        for(auto it:nums)
+        {
+            if(mp.count(it-1))
+            {
+                mp[it]=false;
+            }
+        }
+        
+        int ans=0;
+        
+        for(auto it: nums)
+        {
+            if(mp[it]==true)
+            {
+                int cnt=0, j=0;
+                while(mp.count(it+j))
+                {
+                    j++, cnt++;
+                }
+                ans=std::max(ans, cnt);
+            }
+        }
+        
+        return ans;
+
+    }
+};
