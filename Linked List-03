@@ -1,0 +1,65 @@
+92. Reverse Linked List II
+
+STATEMENT
+Given the head of a singly linked list and two integers left and right where left <= right, 
+reverse the nodes of the list from position left to position right, and return the reversed list.
+
+SOLUTION
+/**
+* Definition for singly-linked list.
+* struct ListNode {
+*     int val;
+*     ListNode *next;
+*     ListNode() : val(0), next(nullptr) {}
+*     ListNode(int x) : val(x), next(nullptr) {}
+*     ListNode(int x, ListNode *next) : val(x), next(next) {}
+* };
+*/
+class Solution
+{
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right)
+    {
+        if (left == right)
+        {
+            return head;
+        }
+
+        ListNode newList(0);
+        newList.next = head;
+        ListNode* prev = &newList;
+
+        while(prev)
+        {
+            cout<<prev->val<<endl;
+            prev=prev->next;
+        }
+
+        prev=&newList;
+        for (int i = 0; i < left - 1; ++i)
+        {
+            prev = prev->next;
+        }
+
+        ListNode* current = prev->next;
+
+        // prev->1->currrent->2->3->4->5 //
+        ListNode* nextNode;
+
+        for (int i = 0; i < right - left; ++i)
+        {
+            nextNode=current->next;
+            current->next=nextNode->next;
+            nextNode->next=prev->next;
+            prev->next=nextNode;
+        }
+
+        return newList.next;
+    }
+};
+
+
+
+
+
+
