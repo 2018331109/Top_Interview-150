@@ -1,0 +1,60 @@
+97. Interleaving String
+
+STATEMENT
+Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+An interleaving of two strings s and t is a configuration where s and t are divided into n and m substrings
+respectively, such that:
+    s = s1 + s2 + ... + sn
+    t = t1 + t2 + ... + tm
+    |n - m| <= 1
+    The interleaving is s1 + t1 + s2 + t2 + s3 + t3 + ... or t1 + s1 + t2 + s2 + t3 + s3 + ...
+Note: a + b is the concatenation of strings a and b.
+
+SOLUTION
+//#include<bits/stdc++.h>
+//using namespace std;
+
+class Solution
+{
+public:
+    int a, b, c;
+    bool solve(string &s1, string &s2, string &s3, int aa, int bb, vector<vector<int>> &dp)
+    {
+        if(aa+bb == c)
+        {
+            return 1;
+        }
+
+        if(dp[aa][bb] != -1)
+        {
+            return dp[aa][bb];
+        }
+
+        bool ans=0;
+
+        if(aa<a && s1[aa]==s3[aa+bb])
+        {
+            ans|=solve(s1, s2, s3, aa+1, bb, dp);
+        }
+            
+        if(bb<b && s2[bb]==s3[aa+bb])
+        {
+            ans|=solve(s1, s2, s3, aa, bb+1, dp);
+        }
+        
+        return dp[aa][bb]=ans;
+    }
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        a=s1.size(), b=s2.size(), c=s3.size();
+        if(a+b != c)
+        {
+            return false;
+        }
+        vector<vector<int>>dp(a+1, vector<int>(b+1, -1));
+
+        return solve(s1, s2, s3, 0, 0, dp);
+
+
+    }
+};
