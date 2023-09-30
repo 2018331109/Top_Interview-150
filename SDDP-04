@@ -1,0 +1,21 @@
+300. Longest Increasing Subsequence
+
+STATEMENT
+Given an integer array nums, return the length of the longest strictly increasing subsequence.
+
+SOLUITON
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        n=len(nums)
+        dp=[]
+
+        for num in nums:
+            index=bisect.bisect_left(dp, num)
+            if index == len(dp):
+                dp.append(num)
+            else:
+                dp[index]=num
+
+        return len(dp)
