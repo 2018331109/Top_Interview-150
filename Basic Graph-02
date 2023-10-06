@@ -1,0 +1,89 @@
+130. Surrounded Regions
+
+STATEMENT
+Given an m x n matrix board containing 'X' and 'O', capture all regions that are 4-directionally surrounded by 'X'.
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+
+SOLUTION
+
+C++
+class Solution
+{
+public:
+
+    void dfs(vector<vector<char>>& board, int i, int j)
+    {
+        int n=board.size(), m=board[0].size();
+        if(i<0||i>=n||j<0||j>=m)
+        {
+            return;
+        }
+
+        if(board[i][j]!='O')
+        {
+            return;
+        }
+
+        board[i][j]='1';
+
+        dfs(board,i+1,j);
+        dfs(board,i,j+1);
+        dfs(board,i-1,j);
+        dfs(board,i,j-1);
+
+        return;
+    }
+    void solve(vector<vector<char>>& board)
+    {
+        int n=board.size(), m=board[0].size();
+
+        if(n==0||m==0)
+        {
+            return;
+        }
+
+        for(int i=0; i<n; i++)
+        {
+            if(board[i][0]=='O')
+            {
+                dfs(board,i,0);
+            }
+            if(board[i][m-1]=='O')
+            {
+                dfs(board,i,m-1);
+            }
+        }
+
+        for(int i=1; i<m-1; i++)
+        {
+            if(board[0][i]=='O')
+            {
+                dfs(board,0,i);
+            }
+            if(board[n-1][i]=='O')
+            {
+                dfs(board,n-1,i);
+            }
+        }
+
+
+
+        for(int i=0; i<n; i++)
+        {
+            for(int j=0; j<m; j++)
+            {
+                if(board[i][j]!='1')
+                {
+                    board[i][j]='X';
+                }
+
+                if(board[i][j]=='1')
+                {
+                    board[i][j]='O';
+                }
+            }
+        }
+
+
+    }
+};
