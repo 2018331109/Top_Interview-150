@@ -1,0 +1,28 @@
+53. Maximum Subarray
+
+STATEMENT
+Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+SOLUTION
+
+C++
+class Solution
+{
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int sum=0, mx=nums[0];
+        for(auto it:nums)
+        {
+            sum+=it;
+            mx=max(mx, sum);
+            
+            if(sum<0)
+            {
+                sum=0;
+            }
+        }
+        
+        return mx;
+    }
+};
